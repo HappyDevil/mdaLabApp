@@ -1,0 +1,10 @@
+V-CASE/.gitattributes
+.idea
+out
+/library
+/target
+/out/artifacts/
+src/main/resources/META-INF/
+.DS_Store
+libs/.DS_Store
+vcase.iml
