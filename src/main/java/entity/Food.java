@@ -2,17 +2,22 @@ package entity;
 
 public class Food {
 
-    public Integer timeToCook;
+    private Integer timeToCook;
 
-    public String name;
+    private String name;
 
+
+    public Food(Integer timeToCook, String name) {
+        this.timeToCook = timeToCook;
+        this.name = name;
+    }
 
     public Integer getTimeToCook() {
-        return null;
+        return timeToCook;
     }
 
     public String getName() {
-        return null;
+        return name;
     }
 
 }
