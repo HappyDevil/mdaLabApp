@@ -6,6 +6,7 @@ import stateContexts.MicrowaveContext;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static enums.MicrowaveEvents.TIMER_TICK;
@@ -18,7 +19,7 @@ public class CookTimer {
     private final AtomicBoolean isNotEnd;
     private final IntegerProperty timeToCook;
     private final MicrowaveContext microwaveContext;
-    private final ExecutorService timerService;
+    private ExecutorService timerService;
     private final Runnable timerRunnable;
 
     public CookTimer(MicrowaveContext microwaveContext) {
@@ -57,7 +58,9 @@ public class CookTimer {
     }
 
     public void stopAppAndTimer() {
+        isPause.set(true);
         isNotEnd.set(false);
+        timerService.shutdown();
     }
 
     public IntegerProperty getTimeToCook() {

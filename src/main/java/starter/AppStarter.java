@@ -25,5 +25,7 @@ public class AppStarter extends Application {
     public void stop() throws Exception {
         super.stop();
         microwaveController.stopApplication();
+        microwaveController = null;
+        microwaveView = null;
     }
 }

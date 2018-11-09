@@ -33,6 +33,7 @@ public class Microwave {
     public void pauseCook(){
         cookingCookTimer.pause();
     }
+
     public void stopApplication() {
         cookingCookTimer.stopAppAndTimer();
     }

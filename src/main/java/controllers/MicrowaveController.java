@@ -13,6 +13,9 @@ import stateContexts.MicrowaveContext;
 import utils.ResourseUtils;
 import views.MicrowaveView;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import static au.com.ds.ef.FlowBuilder.from;
 import static au.com.ds.ef.FlowBuilder.on;
 import static enums.MicrowaveEvents.*;
@@ -24,10 +27,12 @@ public class MicrowaveController {
     private MicrowaveView microwaveView;
     private boolean eatPuted = false;
     private int eatTimeCook = 0;
+    private ExecutorService stateMachine_executor;
 
     public MicrowaveController(MicrowaveContext microwaveContext, MicrowaveView microwaveView) {
         microwave = new Microwave(microwaveContext);
         this.microwaveView = microwaveView;
+        stateMachine_executor = Executors.newSingleThreadExecutor();
         initStateMachine(microwaveContext);
         initViewTriggersToStateMachineEvents(microwaveContext);
         bindTimeToCook(microwave.getTimeToCook());
@@ -115,7 +120,7 @@ public class MicrowaveController {
                         ),
                         on(DOOR_TRIGGER).to(EMPTY)
                 )
-        );
+        ).executor(stateMachine_executor);
     }
 
     private void initViewTriggersToStateMachineEvents(MicrowaveContext microwaveContext) {
@@ -183,6 +188,7 @@ public class MicrowaveController {
     }
 
     public void stopApplication() {
+        stateMachine_executor.shutdownNow();
         microwave.stopApplication();
     }
 }
