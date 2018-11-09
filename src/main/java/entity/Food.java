@@ -3,7 +3,6 @@ package entity;
 public class Food {
 
     private Integer timeToCook;
-
     private String name;
 
 
@@ -15,9 +14,4 @@ public class Food {
     public Integer getTimeToCook() {
         return timeToCook;
     }
-
-    public String getName() {
-        return name;
-    }
-
 }

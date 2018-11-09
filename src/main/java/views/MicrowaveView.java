@@ -3,13 +3,16 @@ package views;
 import controllers.MicrowaveController;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import utils.ResourseUtils;
 
 
@@ -18,6 +21,7 @@ public class MicrowaveView {
     private Scene scene;
     private ImageView microwaveState;
     private Label timeToCook;
+    private Label logStateLabel;
 
     public MicrowaveView() {
     }
@@ -31,32 +35,45 @@ public class MicrowaveView {
 
     private Scene getInitScene() {
         microwaveState = new ImageView();
-        timeToCook = new Label("");
-        VBox vBox = new VBox(microwaveState, timeToCook);
-        vBox.setSpacing(5.0);
-        scene = new Scene(vBox, 500, 380);
+        timeToCook = new Label("00:00");
+        logStateLabel = new Label("");
+        timeToCook.setTextFill(Color.WHITE);
+        timeToCook.setFont(new Font("Arial", 24));
+        logStateLabel.setFont(new Font("Arial", 14));
+        timeToCook.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(0.0), new Insets(0))));
+        Pane stackPane = new Pane(microwaveState, timeToCook,logStateLabel);
+        timeToCook.setLayoutX(410.0);
+        timeToCook.setLayoutY(80.0);
+        logStateLabel.setLayoutX(34);
+        logStateLabel.setLayoutY(342);
+        scene = new Scene(stackPane, 500, 380);
         scene.setFill(Color.WHITE);
         return scene;
     }
 
     public void microwaveToCooking() {
-        microwaveState.setImage(ResourseUtils.getMicrowaveCooking());
+        changeImageTo(ResourseUtils.getMicrowaveCooking());
     }
 
     public void microwaveToEmpty() {
-        microwaveState.setImage(ResourseUtils.getMicrowaveEmpty());
+        changeImageTo(ResourseUtils.getMicrowaveEmpty());
     }
 
     public void microwaveToReadyToCook() {
-        microwaveState.setImage(ResourseUtils.getMicrowaveToReadyToCook());
+        changeImageTo(ResourseUtils.getMicrowaveToReadyToCook());
+    }
+
+    private void changeImageTo(Image microwaveToReadyToCook) {
+        if(microwaveState.getImage()!=microwaveToReadyToCook)
+            microwaveState.setImage(microwaveToReadyToCook);
     }
 
     public void microwaveToInterrupted() {
-        microwaveState.setImage(ResourseUtils.getMicrowaveInterrupted());
+        changeImageTo(ResourseUtils.getMicrowaveInterrupted());
     }
 
     public void microwaveToCookingComplete() {
-        microwaveState.setImage(ResourseUtils.getMicrowaveToCookingComplete());
+        changeImageTo(ResourseUtils.getMicrowaveToCookingComplete());
     }
 
 
@@ -64,11 +81,11 @@ public class MicrowaveView {
         scene.setOnMouseClicked(mouseEventEventHandler);
     }
 
-    public void setTimeToCook(Integer timeToCook) {
-        Platform.runLater(() -> {
-            if(timeToCook>0)
-                this.timeToCook.setText(timeToCook.toString());
-            else this.timeToCook.setText("");
-        });
+    public void setTimeToCook(String timeToCook) {
+        this.timeToCook.setText(timeToCook);
+    }
+
+    public void setState(String state) {
+        this.logStateLabel.setText(state);
     }
 }

@@ -1,5 +1,6 @@
 package entity;
 
+import javafx.beans.property.IntegerProperty;
 import stateContexts.MicrowaveContext;
 
 public class Microwave {
@@ -11,11 +12,7 @@ public class Microwave {
         this.cookingCookTimer = new CookTimer(microwaveContext);
     }
 
-    public Boolean isCooking() {
-        return cookingCookTimer.getTimeToCook() > 0;
-    }
-
-    public Integer getTimeToCook() {
+    public IntegerProperty getTimeToCook() {
         return cookingCookTimer.getTimeToCook();
     }
 
@@ -28,9 +25,23 @@ public class Microwave {
     }
 
     public void startCook(){
-        cookingCookTimer.startTimer(currentFood.getTimeToCook());
+        Integer timeToCook = currentFood.getTimeToCook();
+        cookingCookTimer.startTimer(timeToCook);
+    }
+
+
+    public void pauseCook(){
+        cookingCookTimer.pause();
     }
     public void stopApplication() {
         cookingCookTimer.stopAppAndTimer();
+    }
+
+    public void startCook(int eatTimeCook) {
+        cookingCookTimer.startTimer(eatTimeCook);
+    }
+
+    public void unPause() {
+        cookingCookTimer.unPause();
     }
 }

@@ -1,10 +1,12 @@
+package starter;
+
 import controllers.MicrowaveController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import stateContexts.MicrowaveContext;
 import views.MicrowaveView;
 
-public class Main extends Application {
+public class AppStarter extends Application {
 
     static MicrowaveView microwaveView;
     static MicrowaveController microwaveController;
@@ -23,9 +25,5 @@ public class Main extends Application {
     public void stop() throws Exception {
         super.stop();
         microwaveController.stopApplication();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

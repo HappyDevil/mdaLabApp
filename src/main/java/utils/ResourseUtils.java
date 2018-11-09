@@ -61,4 +61,24 @@ public class ResourseUtils {
         microwaveCookingComplete = lazyInitImage(microwaveCookingComplete,"microwave_complete.jpg");
         return microwaveCookingComplete;
     }
+
+
+    public static String convertMillisecondsToMicrowaveTimestamp(Integer timeToCook) {
+        int seconds = timeToCook / 1000;
+        int minutes = seconds / 60;
+        int viewSeconds = seconds - minutes * 60;
+        String seconds_str;
+        String minutess_str;
+        if (minutes < 10) {
+            minutess_str = "0" + String.valueOf(minutes);
+        } else {
+            minutess_str = String.valueOf(minutes);
+        }
+        if (viewSeconds < 10) {
+            seconds_str = "0" + String.valueOf(viewSeconds);
+        } else {
+            seconds_str = String.valueOf(viewSeconds);
+        }
+        return minutess_str + ":" + seconds_str;
+    }
 }
